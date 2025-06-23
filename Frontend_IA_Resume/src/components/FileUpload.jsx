@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import axios from '../services/Axios';
+import axios from '../services/axios';
 import '../styles/FileUpload.css';
 import Swal from 'sweetalert2';
 
@@ -12,7 +12,6 @@ const FileUpload = () => {
     fileInputRef.current.click();
   };
 
-  // Función para descargar texto como archivo .txt
   const downloadTxt = (filename, text) => {
     const element = document.createElement('a');
     const file = new Blob([text], { type: 'text/plain' });
@@ -30,7 +29,6 @@ const FileUpload = () => {
       return;
     }
 
-    // Validar que el archivo sea mp4
     if (file.type !== 'video/mp4') {
       Swal.fire({
         icon: 'error',
@@ -53,19 +51,13 @@ const FileUpload = () => {
         },
       });
 
-      // Verifica la estructura real de la respuesta
-      console.log('Respuesta del backend:', response.data);
-
-      // Asegúrate de que los campos existen y son string
       const transcription = response.data?.transcription;
       const summary = response.data?.summary;
 
-      // Descargar TXT de la transcripción
       if (transcription && typeof transcription === 'string') {
         downloadTxt('transcripcion.txt', transcription);
       }
 
-      // Descargar TXT del resumen
       if (summary && typeof summary === 'string') {
         downloadTxt('resumen.txt', summary);
       }
